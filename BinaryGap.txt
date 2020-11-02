@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class Main
+{
+    public static void main(String[] args) {
+        System.out.println(solution(51712));
+	}
+    public static int solution(int N) {
+        // write your code in Java SE 8
+        String binaryString = Integer.toBinaryString(N);
+        char[] cArr = binaryString.toCharArray();
+        
+        if(Integer.bitCount(N) == 1 || Integer.bitCount(N) == binaryString.length()){
+            return 0;
+        }
+        
+        return find(cArr);
+        
+    }
+    
+    public static int find(char[] cArr){
+        char first = cArr[0];
+        int cnt = 0;
+        
+        List<Integer> list = new ArrayList<>();
+        
+        for(int i=1; i<cArr.length; i++){
+            if(first != cArr[i]){
+                cnt++;
+            } else{
+                list.add(cnt);
+                cnt = 0;
+            }
+        }
+        
+        return Collections.max(list);
+    }
+}
