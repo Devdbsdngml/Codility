@@ -1,0 +1,22 @@
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+import java.util.*;
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        // 카카오 모의 테스트 중
+        // 직사각형 남은 좌표 찾기 풀 때 알았던
+        // XOR 을 활용하여 동일 값 제거하기
+        int answer = 0;
+        
+        for(int i=0; i<A.length; i++){
+            answer ^= A[i];
+        }
+        
+        return answer;
+    }
+}
