@@ -1,0 +1,42 @@
+// 첫번째 풀이 80%..
+// 생각으로 1부터 n까지 합 구해서 원소의 값들을 빼면
+// 남은 원소를 찾을 수 있을 거라 생각함
+// 근데 등차수열 공식으로 풀면 시간 복잡도가.. 왜 다르지?
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        int len = A.length + 1;
+        // 등차수열의 합 공식
+        // n(2a+(n-1)d)/2
+        int answer = len * (2 + (len - 1)) / 2;
+        
+        for(int i : A){
+            answer -= i;
+        }
+        
+        return answer;
+    }
+}
+
+// 두번 째 풀이 가우스 공식으로 위와 같은 방식으로 품
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        int len = A.length + 1;
+        int answer = 0;
+        
+        if(len % 2 == 0){
+            answer = (len + 1) * (len / 2);
+        } else{
+            answer = len * ((len - 1) / 2) + len;
+        }
+        
+        for(int i : A){
+            answer -= i;
+        }
+        
+        return answer;
+    }
+}
