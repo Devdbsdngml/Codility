@@ -1,0 +1,43 @@
+// 배열의 range 가 10만개여서 시간 복잡도 O(n^2) 가 되면 타임 에러가 뜰 것 같았다
+// P를 기준으로 배열의 첫 번째 인덱스부터 P까지의 합(좌측 값의 합)과 P부터 N-1까지의 합(우측 값의 합)
+// 을 나열하다 보니 이중 포문을 안 써도 된다
+// 즉, P:2 부터 sumP는 P:1 일때의 sumP에 a를 더한 값과 같고, sumN은 이전 sumN에 a를 뺀 값과 같다
+
+
+import java.util.*;
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        /*
+        
+        3 1 2 4 3
+        a = A[P-1];
+        
+        P:1, a = 3  sumP = 3  sumN = 10  min = 7
+        P:2, a = 1  sumP = 4  sumN = 9  min = 5
+        P:3, a = 2  sumP = 6  sumN = 7  min = 1
+        P:4, a = 4  sumP = 10  sumN = 3  min = 7
+        
+        */
+        int sumP = A[0];
+        int sumN = 0;
+        
+        for(int i=1; i<A.length; i++){
+            sumN += A[i];
+        }
+        
+        int min = Math.abs(sumN - sumP);
+        
+        for(int P=2; P<A.length; P++){
+            sumP += A[P-1];
+            sumN -= A[P-1];
+            
+            int diff = Math.abs(sumN - sumP);
+            
+            min = Math.min(min, diff);
+        }
+        
+        return min;
+    }
+}
