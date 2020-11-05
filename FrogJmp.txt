@@ -1,0 +1,23 @@
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int X, int Y, int D) {
+        // write your code in Java SE 8
+        int answer = (Y - X) / D;
+        
+        if((Y - X) % D != 0){
+            answer++;
+        }
+        
+        return answer;
+    }
+}
+
+// 처음에 반복문 while을 사용해서
+// X 값이 Y 값을 넘어서거나 같을 때 break;를 걸어줬지만
+// TC는 통과를 했지만 시간 복잡도가 O(1)이 나오지 않음.
+// 되게 간단한 초등 수학 공식으로 풀어짐..
