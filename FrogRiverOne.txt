@@ -1,0 +1,63 @@
+// 첫번 째 풀이
+// TC 맞았지만 시간초과(시간 복잡도가 O(N^2))
+
+import java.util.*;
+
+class Solution {
+    public int solution(int X, int[] A) {
+        // write your code in Java SE 8
+        /*
+        
+        개구리가 점프를 하는데
+        X까지 점프를 하기 위해선, 잎들이 다 있어야 된다는 것?
+        X=5면, 배열에 1~5까지 잎들이 떨어져야 개구리가 점프를 해서 위치할 수 있고
+        그 때의 초(index)를 반환
+        
+        만약 없다면 return -1
+        
+        */
+        List<Integer> list = new ArrayList<>();
+        int answer;
+        int sum = (X * (X + 1)) / 2;
+        
+        if(A.length == 0){
+            return -1;
+        }
+        
+        for(answer=0; answer<A.length; answer++){
+            if(!list.contains(A[answer])){
+                list.add(A[answer]);
+                sum -= A[answer];
+            }
+            
+            if(sum == 0){
+                return answer;
+            }
+        }
+        
+        return -1;
+    }
+}
+
+// 두번 째 풀이
+// HashSet을 이용해서 풀이 시간 복잡도 O(N)
+import java.util.*;
+
+class Solution {
+    public int solution(int X, int[] A) {
+        // write your code in Java SE 8
+        Set<Integer> set = new HashSet<>();
+        int answer;
+        
+        for(answer=0; answer<A.length; answer++){
+            set.add(A[answer]);
+            
+            if(set.size() == X){
+                return answer;
+            }
+        }
+        
+        return -1;
+    }
+}
+
