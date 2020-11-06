@@ -1,0 +1,39 @@
+// 첫 번째 풀이(77%)
+// 이 역시도 모든 TC가 맞았으나 TIMEOUT이 2개 발생
+
+import java.util.*;
+
+class Solution {
+    public int[] solution(int N, int[] A) {
+        /*
+        
+        increase(X) : 카운터 X가 1씩 증가함
+        max counter : 모든 카운터가 다른 모든 카운터의 최댓값으로 설정됨
+        
+        A[K] = X, 1 <= X <= N : K가 increase(X)
+        A[K] = N + 1 : K 가 max counter
+        
+        N = 5
+        
+        K : 0 1 2 3 4 5 6
+            3 4 4 6 1 4 4
+        
+        */
+        
+        int[] answer = new int[N];
+        int max = 0;
+        
+        for(int i=0; i<A.length; i++){
+            if(A[i] <= N){
+                answer[A[i]-1]++;
+                max = Math.max(max, answer[A[i]-1]);
+            }
+            
+            if(A[i] == N + 1){
+                Arrays.fill(answer, max);
+            }
+        }
+        
+        return answer;
+    }
+}
