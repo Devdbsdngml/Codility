@@ -1,0 +1,49 @@
+// 첫번 째 풀이(66%)
+// 이 역시 모든 TC는 맞았는데 시간 복잡도가 O(n^2)가 나옴..
+// Collections 시간 복잡도 찾아보니까 List의 add는 O(1) 이고 contains는 O(n)인데
+// 어떻게 계산이 되는 지 모르겠다
+// Set은 add와 contains의 시간 복잡도가 O(1)이어서 List 대신 Set으로 바꿔서 풀면 100%나오긴 함
+
+import java.util.*;
+
+class Solution {
+    public int solution(int[] A) {
+        int answer = 1;
+        List<Integer> list = new ArrayList<>();
+        
+        for(int i : A){
+            list.add(i);
+        }
+        
+        for(int i=1; i<=list.size(); i++){
+            if(!list.contains(i)){
+                answer = 0;
+                break;
+            }
+        }
+        
+        return answer;
+    }
+}
+
+// 두번 째 풀이(100%)
+// Array.sort의 시간 복잡도는 O(nlogn)
+
+import java.util.*;
+
+class Solution {
+    public int solution(int[] A) {
+        int answer = 1;
+        
+        Arrays.sort(A);
+        
+        for(int i=1; i<=A.length; i++){
+            if(i != A[i-1]){
+                answer = 0;
+                break;
+            }
+        }
+        
+        return answer;
+    }
+}
