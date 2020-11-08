@@ -1,0 +1,42 @@
+// 첫번 째 풀이(50%)
+// A와 B의 range가 20억이라 당연히 시간 초과
+
+import java.util.*;
+
+class Solution {
+    public int solution(int A, int B, int K) {
+        int answer = 0;
+        
+        for(int i=A; i<=B; i++){
+            if(i % K == 0){
+                answer++;
+            }
+        }
+        return answer;
+    }
+}
+
+// 두번 째 풀이(100%)
+// 수학적 지식 +1
+
+import java.util.*;
+
+class Solution {
+    public int solution(int A, int B, int K) {
+        /*
+        
+        시간 복잡도가 O(1) 이어야 됨
+        A와 B는 0부터 20억의 까지이의 숫자고 K는 1부터 20억
+        
+        A와 B사이의 K 배수 구하기
+        반복문을 사용하면 시간 초과
+        
+        범위의 처음 시작 하는 정수(A)와 끝나는 정수(B)를 각
+        K로 나눈 몫의 차에서
+        A % K == 0이면 +1을 해줌으로써 구할 수 있다.
+        
+        */
+        
+        return (B / K) - (A / K) + ((A % K == 0) ? 1 : 0);
+    }
+}
