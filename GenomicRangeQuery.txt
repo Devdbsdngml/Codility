@@ -1,0 +1,123 @@
+// 첫번 째 풀이(62%)
+// 역시나 모든 TC 맞았으나.... 시간 복잡도가 O(N*M)
+// 시간 복잡도 줄이는 연습을 많이 해야겠다
+
+import java.util.*;
+
+class Solution {
+    public int[] solution(String S, int[] P, int[] Q) {
+        /*
+        
+        Nucleotides of types : A C G T
+        impact factors :         1 2 3 4
+           
+            0 1 2 3 4 5 6
+        S : C A G C C T A
+            P    Q
+        0 : 2    4   -> G, C가 존재하고 factors는 3, 2 에서 minimal -> 2
+        1 : 5    5   -> T가 존재하고 factors는 4 -> 4
+        2 : 0    6   -> A C G T 다 존재 factors minimal -> 1
+        
+        return [2, 4, 1]
+        
+        */
+        Map<Character, Integer> map = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+        
+        int len = P.length;
+        int[] answer = new int[len];
+        
+        map.put('A', 1);
+        map.put('C', 2);
+        map.put('G', 3);
+        map.put('T', 4);
+        
+        for(int i=0; i<len; i++){
+            int start = P[i];
+            int end = Q[i];
+            
+            String s = S.substring(start, end+1);
+            int min = 5;
+            
+            for(int j=0; j<s.length(); j++){
+                if(map.containsKey(s.charAt(j))){
+                    min = Math.min(min, map.get(s.charAt(j)));
+                }
+            }
+            
+            list.add(min);
+        }
+        
+        for(int i=0; i<list.size(); i++){
+            answer[i] = list.get(i);
+        }
+        
+        return answer;
+    }
+}
+
+// 두번 째 풀이(100%) 다른 사람 풀이 참고함
+// 이 풀이는 String S의 해당하는 Character의 갯수를 담을 배열을 만든 후
+// S를 돌면서 char이 나올 때 해당 인덱스에 +1를 해주고, 나오지 않았다면 이전 값으로 계속 갱신을 해준다
+// 그러면 String S = CAGCCTA 일 때,
+// A = {00111112}  C = {01112333}  G = {00011111}
+// 즉, A C G 의 각 값이 바뀔 때 그 해당 char이 나왔다고 볼 수 있다
+// 범위 P[i] 부터 Q[i]+1 까지 A가 존재한다는 것은 A[P[i]] != A[Q[i]+1] 일 경우다
+// P[0] = 2 Q[0] = 4, A[2] == A[5] 범위에 A가 존재하지 않음
+
+
+import java.util.*;
+
+class Solution {
+    public int[] solution(String S, int[] P, int[] Q) {
+        /*
+        
+        Nucleotides of types : A C G T
+        impact factors :         1 2 3 4
+           
+            0 1 2 3 4 5 6
+        S : C A G C C T A
+            P    Q
+        0 : 2    4   -> G, C가 존재하고 factors는 3, 2 에서 minimal -> 2
+        1 : 5    5   -> T가 존재하고 factors는 4 -> 4
+        2 : 0    6   -> A C G T 다 존재 factors minimal -> 1
+        
+        return [2, 4, 1]
+        
+        */
+        int len = P.length;
+        int[] cntA = new int[S.length()+1];
+        int[] cntC = new int[S.length()+1];
+        int[] cntG = new int[S.length()+1];
+        
+        int[] answer = new int[len];
+        
+        for(int i=0; i<S.length(); i++){
+            cntA[i+1] = cntA[i];
+            cntC[i+1] = cntC[i];
+            cntG[i+1] = cntG[i];
+            
+            if(S.charAt(i) == 'A'){
+                cntA[i+1]++;
+            } else if(S.charAt(i) == 'C'){
+                cntC[i+1]++;
+            } else if(S.charAt(i) == 'G'){
+                cntG[i+1]++;
+            }
+        }
+        
+        for(int i=0; i<len; i++){
+            if(cntA[P[i]] != cntA[Q[i]+1]){
+                answer[i] = 1;
+            } else if(cntC[P[i]] != cntC[Q[i]+1]){
+                answer[i] = 2;
+            } else if(cntG[P[i]] != cntG[Q[i]+1]){
+                answer[i] = 3;
+            } else{
+                answer[i] = 4;
+            }
+        }
+        
+        return answer;
+    }
+}
