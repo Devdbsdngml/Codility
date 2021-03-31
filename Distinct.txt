@@ -1,0 +1,16 @@
+// 100%
+// 배열의 원소의 중복 값 제거하여 몇 종류인지 return -> 중복 제거라 HashSet 사용
+
+import java.util.*;
+
+class Solution {
+    public int solution(int[] A) {
+        HashSet<Integer> hs = new HashSet<>();
+
+        for(int i : A){
+            hs.add(i);
+        }
+
+        return hs.size();
+    }
+}
