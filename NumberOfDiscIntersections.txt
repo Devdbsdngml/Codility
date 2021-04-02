@@ -97,3 +97,39 @@ class Solution {
 
     }
 }
+
+// 도저히 모르겠어서 구글링해서 찾은 풀이
+
+
+import java.util.*;
+
+class Solution {
+    public int solution(int[] A) {
+        int len = A.length;
+
+        int cnt = 0;
+        int j =0;
+
+        long[] left = new long[len];
+        long[] right = new long[len];
+
+        for(int i=0; i<len; i++){
+            left[i] = i - (long)A[i];
+            right[i] = i + (long)A[i];
+        }
+
+        // left 좌표와 right 좌표 오름차순으로 정렬
+        Arrays.sort(left);
+        Arrays.sort(right);
+
+        for(int i=0; i<len; i++){
+            while(j < len && right[i] >= left[j]){
+                cnt += j;
+                cnt -= i;
+                j++;
+            }
+        }
+
+        return cnt > 10000000 ? -1 : cnt;
+    }
+}
