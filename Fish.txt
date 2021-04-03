@@ -1,0 +1,133 @@
+// 첫번째 접근방법
+// class로 A B 배열의 value를 Stack에 넣어서 값을 비교해가며 푸려고 했음
+// 생각을 잘못한 거 같아서 갈아 엎음 -> 조금 더 쉽게 할 수 있을 것 같아서
+// 하류하는 Fish만 Stack에 넣어줘서 풀었고 처음 생각했던대로 class로도 풀 수 있을 듯?
+
+/*
+
+Array A : sizes of the fish (unique value)
+Array B : directions of the fish (0 : upstream 1 : downstream)
+
+두 마리 fish가 반대 위치해 있고 그 사이에 아무도 없다면 한 마리의 fish만 살아남는다(큰 놈이 작은 놈을 먹음)
+
+B[P] = 1(downstream) 이고 B[Q] = 0(upstream) 일 때
+1. A[P] > A[Q] 라면 P가 Q를 먹고 P는 downstream을 한다
+2. A[Q] > A[P] 라면 Q가 P를 먹고 Q는 upstream을 한다
+
+이해하는데 19분
+모든 fish의 speed는 same이니 downstream(1) 하는 fish가 upstream(0) 하는 fish 보다 size가 크면 잡아 먹을 수 있음
+이때 downstream(1) 하는 fish 가 upstream(0) 하는 fish 보다 size가 작으면 잡아 먹히고 끝.
+
+*/
+
+import java.util.*;
+
+class Solution {
+    class Fish{
+        int size;
+        int direction;
+
+        Fish(int size, int direction){
+            this.size = size;
+            this.direction = direction;
+        }
+    }
+    public int solution(int[] A, int[] B) {
+        // write your code in Java SE 8
+        int aliveFish = A.length;
+        Stack<Fish> fish = new Stack<>();
+
+        for(int i=0; i<A.length; i++){
+            fish.pushr(new Fish(A[i], B[i]));
+        }
+
+        while(!fish.isEmpty()){
+            Fish f = fish.peek();
+            if(f.direction == 1){
+                if(fish.pop().direction == 0){
+                    if(f.size > fish.peek().size){
+                        
+                    }
+                }
+            } else{
+                fish.pop();
+                continue;
+            }
+        }
+    }
+}
+
+// 첫번째 풀이(37%)
+import java.util.*;
+
+class Solution {
+    public int solution(int[] A, int[] B) {
+        // write your code in Java SE 8
+        Stack<Integer> downFish = new Stack<>();
+        int aliveFish = 0;
+
+        for(int i=0; i<A.length; i++){
+            // 상류 fish면
+            if(B[i] == 0){
+                // 하류 fish가 존재하면
+                if(!downFish.isEmpty()){
+                    while(!downFish.isEmpty()){
+                        if(A[downFish.peek()] > A[i]){
+                            break;
+                        } else{
+                            downFish.pop();
+                            aliveFish++;
+                        }
+                    }
+                } else{
+                    aliveFish++;
+                }
+            }
+            // 하류 fish면
+            else{
+                downFish.push(i);
+            }
+        }
+
+        return aliveFish + downFish.size();
+    }
+}
+
+// 두번째 풀이(100%)
+import java.util.*;
+
+class Solution {
+    public int solution(int[] A, int[] B) {
+        // write your code in Java SE 8
+        Stack<Integer> downFish = new Stack<>();
+        int aliveFish = 0;
+
+        for(int i=0; i<A.length; i++){
+            // 상류 fish면
+            if(B[i] == 0){
+                // 하류 fish가 없으면
+                if(downFish.isEmpty()){
+                    aliveFish++;
+                } else{
+                    // 하류 fish가 존재하지 않을 때까지
+                    while(!downFish.isEmpty()){
+                        if(A[downFish.peek()] > A[i]){
+                            break;
+                        } else{
+                            downFish.pop();
+                        }
+                    }
+                    if(downFish.isEmpty()){
+                        aliveFish++;
+                    }
+                }
+            }
+            // 하류 fish면
+            else{
+                downFish.push(i);
+            }
+        }
+
+        return aliveFish + downFish.size();
+    }
+}
