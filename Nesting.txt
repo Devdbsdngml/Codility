@@ -1,0 +1,28 @@
+/*
+
+완벽한 괄호? 인지 확인하는 문제
+
+*/
+
+import java.util.*;
+
+class Solution {
+    public int solution(String S) {
+        // write your code in Java SE 8
+        Stack<Character> s = new Stack<>();
+
+        for(char c : S.toCharArray()){
+            if(c == '('){
+                s.push(c);
+            } else{
+                if(!s.isEmpty()){
+                    s.pop();
+                } else{
+                    return 0;
+                }
+            }
+        }
+
+        return s.isEmpty() ? 1 : 0;
+    }
+}
